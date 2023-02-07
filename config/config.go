@@ -51,9 +51,9 @@ func LoadConfig() *Configuration {
 		}
 
 		// 判断配置文件是否存在，存在直接JSON读取
-		_, err := os.Stat("config.json")
+		_, err := os.Stat("config/config.json")
 		if err == nil {
-			f, err := os.Open("config.json")
+			f, err := os.Open("config/config.json")
 			if err != nil {
 				log.Fatalf("open config err: %v", err)
 				return
