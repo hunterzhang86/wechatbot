@@ -1,5 +1,10 @@
 FROM golang:alpine AS builder
 ENV GOPROXY=https://goproxy.cn
+ENV TZ Asia/Shanghai
+
+RUN apk add tzdata && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && echo ${TZ} > /etc/timezone \
+    && apk del tzdata
 
 WORKDIR /app
 
