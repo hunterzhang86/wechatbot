@@ -12,4 +12,4 @@ FROM alpine
 WORKDIR /app
 COPY --from=builder /app/wechatbot /app/wechatbot
 
-CMD ["/app/wechatbot"]
+CMD ["./wechatbot"]
