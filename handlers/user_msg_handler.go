@@ -85,7 +85,7 @@ func (h *UserMessageHandler) ReplyText() error {
 	}
 	logger.Info(fmt.Sprintf("h.sender.NickName == %+v", h.sender.NickName))
 	// 3.向GPT发起请求，如果回复文本等于空,不回复
-	reply, err = gpt.Completions(h.getRequestText())
+	reply, err = gpt.Completions(requestText)
 	if err != nil {
 		// 2.1 将GPT请求失败信息输出给用户，省得整天来问又不知道日志在哪里。
 		errMsg := fmt.Sprintf("gpt request error: %v", err)
@@ -114,10 +114,10 @@ func (h *UserMessageHandler) getRequestText() string {
 	requestText = strings.Trim(h.msg.Content, "\n")
 
 	// 2.获取上下文，拼接在一起，如果字符长度超出4000，截取为4000。（GPT按字符长度算），达芬奇3最大为4068，也许后续为了适应要动态进行判断。
-	sessionText := h.service.GetUserSessionContext()
-	if sessionText != "" {
-		requestText = sessionText + "\n" + requestText
-	}
+	//sessionText := h.service.GetUserSessionContext()
+	//if sessionText != "" {
+	//	requestText = sessionText + "\n" + requestText
+	//}
 	if len(requestText) >= 4000 {
 		requestText = requestText[:4000]
 	}
