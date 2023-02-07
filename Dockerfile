@@ -10,6 +10,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o wechatbot main.go
 FROM alpine
 
 WORKDIR /app
-COPY --from=builder /app/wechatbot /app/wechatbot
+COPY --from=builder /app/wechatbot .
+COPY --from=builder /app/config.json .
 
 CMD ["./wechatbot"]
