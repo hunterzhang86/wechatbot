@@ -11,6 +11,5 @@ FROM alpine
 
 WORKDIR /app
 COPY --from=builder /app/wechatbot .
-COPY --from=builder /app/config.json .
 
 CMD ["./wechatbot"]
