@@ -8,6 +8,7 @@ import (
 	"github.com/qingconglaixueit/wechatbot/gpt"
 	"github.com/qingconglaixueit/wechatbot/pkg/logger"
 	"github.com/qingconglaixueit/wechatbot/service"
+	"github.com/qingconglaixueit/wechatbot/utils"
 	"strings"
 )
 
@@ -25,6 +26,7 @@ type UserMessageHandler struct {
 
 func UserMessageContextHandler() func(ctx *openwechat.MessageContext) {
 	return func(ctx *openwechat.MessageContext) {
+		defer utils.DumpPanicStack(fmt.Errorf("failed to handle user message"))
 		msg := ctx.Message
 		handler, err := NewUserMessageHandler(msg)
 		if err != nil {

@@ -4,9 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/eatmoreapple/openwechat"
+	"github.com/qingconglaixueit/wechatbot/config"
 	"github.com/qingconglaixueit/wechatbot/gpt"
 	"github.com/qingconglaixueit/wechatbot/pkg/logger"
 	"github.com/qingconglaixueit/wechatbot/service"
+	"github.com/qingconglaixueit/wechatbot/utils"
 	"strings"
 )
 
@@ -28,6 +30,7 @@ type GroupMessageHandler struct {
 
 func GroupMessageContextHandler() func(ctx *openwechat.MessageContext) {
 	return func(ctx *openwechat.MessageContext) {
+		defer utils.DumpPanicStack(fmt.Errorf("failed to handle group message"))
 		msg := ctx.Message
 		// 获取用户消息处理器
 		handler, err := NewGroupMessageHandler(msg)
@@ -93,6 +96,11 @@ func (g *GroupMessageHandler) ReplyText() error {
 	requestText := g.getRequestText()
 	if requestText == "" {
 		logger.Info("user message is null")
+		return nil
+	}
+	// 2.如果不包含关键字，不处理
+	if !strings.Contains(requestText, config.LoadConfig().RequestPrefix) {
+		logger.Info("user message not contains %s, skip it", config.LoadConfig().RequestPrefix)
 		return nil
 	}
 

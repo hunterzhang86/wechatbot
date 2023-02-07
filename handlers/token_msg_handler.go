@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"fmt"
+	"github.com/eatmoreapple/openwechat"
 	"github.com/qingconglaixueit/wechatbot/pkg/logger"
 	"github.com/qingconglaixueit/wechatbot/service"
-	"github.com/eatmoreapple/openwechat"
+	"github.com/qingconglaixueit/wechatbot/utils"
 )
 
 var _ MessageHandlerInterface = (*TokenMessageHandler)(nil)
@@ -21,6 +22,7 @@ type TokenMessageHandler struct {
 
 func TokenMessageContextHandler() func(ctx *openwechat.MessageContext) {
 	return func(ctx *openwechat.MessageContext) {
+		defer utils.DumpPanicStack(fmt.Errorf("failed to handle token message"))
 		msg := ctx.Message
 		// 获取口令消息处理器
 		handler, err := NewTokenMessageHandler(msg)
