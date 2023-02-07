@@ -29,6 +29,8 @@ type Configuration struct {
 	ReplyPrefix string `json:"reply_prefix"`
 	// 清空会话口令
 	SessionClearToken string `json:"session_clear_token"`
+	// 请求消息的前缀，需要为该前缀的消息才会被处理
+	RequestPrefix string `json:"request_prefix"`
 }
 
 var config *Configuration
@@ -45,6 +47,7 @@ func LoadConfig() *Configuration {
 			Model:             "text-davinci-003",
 			Temperature:       0.9,
 			SessionClearToken: "下一个问题",
+			RequestPrefix:     "chatgpt: ",
 		}
 
 		// 判断配置文件是否存在，存在直接JSON读取
