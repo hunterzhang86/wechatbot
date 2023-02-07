@@ -80,7 +80,7 @@ func (h *UserMessageHandler) ReplyText() error {
 	}
 	// 2.如果不是以指定前缀开头，不处理
 	if !strings.HasPrefix(requestText, config.LoadConfig().RequestPrefix) {
-		logger.Info("user message not start with %s, skip it", config.LoadConfig().RequestPrefix)
+		logger.Info(fmt.Sprintf("user message not start with %s, skip it", config.LoadConfig().RequestPrefix))
 		return nil
 	}
 	logger.Info(fmt.Sprintf("h.sender.NickName == %+v", h.sender.NickName))

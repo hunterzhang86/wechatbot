@@ -100,7 +100,7 @@ func (g *GroupMessageHandler) ReplyText() error {
 	}
 	// 2.如果不包含关键字，不处理
 	if !strings.Contains(requestText, config.LoadConfig().RequestPrefix) {
-		logger.Info("user message not contains %s, skip it", config.LoadConfig().RequestPrefix)
+		logger.Info(fmt.Sprintf("user message not contains with %s, skip it", config.LoadConfig().RequestPrefix))
 		return nil
 	}
 
